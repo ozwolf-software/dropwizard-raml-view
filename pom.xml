@@ -10,6 +10,7 @@
 
     <properties>
         <compile.level>1.7</compile.level>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Runtime Library Versions -->
         <dropwizard.version>0.7.1</dropwizard.version>
