@@ -35,7 +35,7 @@ public class ApiSpecsBundle implements Bundle {
     @Override
     public void initialize(Bootstrap<?> bootstrap) {
         bootstrap.addBundle(new ViewBundle());
-        bootstrap.addBundle(new AssetsBundle("/raml-docs-assets", "/api/assets"));
+        bootstrap.addBundle(new AssetsBundle("/raml-docs-assets", "/api/assets", null, "raml-view"));
     }
 
     @Override
