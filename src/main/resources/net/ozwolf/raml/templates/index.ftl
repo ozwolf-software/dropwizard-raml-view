@@ -258,10 +258,10 @@
     <p class="section-header">
         Response <code>${response.code}</code><code>${response.contentType}</code>
                 <span class="right">
-                    <a href="javascript:toggleItemVisibility('endpoint-${resourceId}-response-${response.code}-${response.id}')">Toggle</a>
+                    <a href="javascript:toggleItemVisibility('endpoint-${resourceId}-${action.type}-response-${response.code}-${response.id}')">Toggle</a>
                 </span>
     </p>
-    <div class="section" id="endpoint-${resourceId}-response-${response.code}-${response.id}" style="display: none;">
+    <div class="section" id="endpoint-${resourceId}-${action.type}-response-${response.code}-${response.id}" style="display: none;">
         [#if response.description??]
             <div class="description">
                 ${response.description}
