@@ -4,7 +4,7 @@
 <head>
     <title>${model.title?html} (v${model.version?html})</title>
     <link rel="stylesheet" type="text/css" href="/api/assets/css/raml-docs-base.css"/>
-    <link rel="stylesheet" type="text/css" href="/api/assets/css/raml-docs-compiled.css"/>
+    <link rel="stylesheet" type="text/css" href="/api/assets/css/raml-docs.css"/>
 
     [#if model.hasStylesheets()]
         [#list model.stylesheets as stylesheet]
@@ -267,7 +267,9 @@
                 ${response.description}
             </div>
         [/#if]
-        <h5>Headers</h5>
+        <p class="section-sub-header">
+            Headers
+        </p>
         <div class="highlight-block">
             <span class="label">Content-Type</span>: <span class="value">${response.contentType}</span>
             [#list response.headers as header]
@@ -275,25 +277,44 @@
                 <span class="label">${header.name}</span>: <span class="value">${header.display}</span>
             [/#list]
         </div>
-        <h5>Example</h5>
+
+        <p class="section-sub-header">
+            Example
+            [#if response.example??]
+            <span class="right">
+                <a href="javascript: toggleItemVisibility('endpoint-${resourceId}-${action.type}-response-${response.code}-${response.id}-example')">View</a>
+            </span>
+            [/#if]
+        </p>
         [#if response.example??]
+            <div id="endpoint-${resourceId}-${action.type}-response-${response.code}-${response.id}-example" style="display: none;">
             [#if response.json]
                 <pre class="prettyprint lang-json">${response.example}</pre>
             [#else]
                 <code>${response.example}</code>
             [/#if]
+            </div>
         [#else]
             <p class="alert">
                 No <code>example</code> provided.
             </p>
         [/#if]
-        <h5>Schema</h5>
+        <p class="section-sub-header">
+            Schema
+            [#if response.schema??]
+            <span class="right">
+                <a href="javascript: toggleItemVisibility('endpoint-${resourceId}-${action.type}-response-${response.code}-${response.id}-schema')">View</a>
+            </span>
+            [/#if]
+        </p>
         [#if response.schema??]
+            <div id="endpoint-${resourceId}-${action.type}-response-${response.code}-${response.id}-schema" style="display: none;">
             [#if response.json]
                 <pre class="prettyprint lang-json">${response.schema}</pre>
             [#else]
                 <code>${response.schema}</code>
             [/#if]
+            </div>
         [#else]
             <p class="alert">
                 No <code>schema</code> provided.

@@ -6,7 +6,7 @@
 
     <groupId>net.ozwolf</groupId>
     <artifactId>dropwizard-raml-view</artifactId>
-    <version>0.7-6</version>
+    <version>0.7-7</version>
 
     <properties>
         <compile.level>1.7</compile.level>

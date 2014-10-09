@@ -209,6 +209,7 @@ div.endpoint div.uri>div.details>div.section {
 
 div.endpoint div.uri>div.details>div.section>h5 {
   font-size: 90%;
+  border-bottom: dashed 1px @grey;
 }
 
 div.endpoint div.uri>div.details>p.section-header {
@@ -218,7 +219,14 @@ div.endpoint div.uri>div.details>p.section-header {
   padding-bottom: 2px;
 }
 
-div.endpoint div.uri>div.details>p.section-header>span.right {
+div.endpoint div.uri>div.details>div.section>p.section-sub-header {
+  font-weight: bold;
+  font-size: 0.9em;
+  border-bottom: solid 1px @grey;
+  padding-bottom: 2px;
+}
+
+div.endpoint div.uri>div.details>p.section-header>span.right, div.endpoint div.uri>div.details>div.section>p.section-sub-header>span.right {
   font-weight: normal;
 }
 
