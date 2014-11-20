@@ -14,6 +14,7 @@
 @postColour: #009966;
 @deleteColour: #990000;
 @putColour: #EB8510;
+@patchColour: #EBEA06;
 
 @headerLabelColour: #c82829;
 @headerValueColour: #718c00;
@@ -158,6 +159,14 @@ div.endpoint div.POST {
 
 div.endpoint div.POST>div.header {
   background-color: @postColour;
+}
+
+div.endpoint div.PATCH {
+  .corners(5px, @patchColour);
+}
+
+div.endpoint div.PATCH>div.header {
+  background-color: @patchColour;
 }
 
 div.endpoint div.PUT {
