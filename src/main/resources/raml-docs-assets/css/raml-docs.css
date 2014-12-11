@@ -135,6 +135,15 @@ div.endpoint div.POST {
 div.endpoint div.POST > div.header {
   background-color: #009966;
 }
+div.endpoint div.PATCH {
+  border: solid 1px #ebea06;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+div.endpoint div.PATCH > div.header {
+  background-color: #ebea06;
+}
 div.endpoint div.PUT {
   border: solid 1px #eb8510;
   border-radius: 5px;
