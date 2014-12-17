@@ -1,22 +1,23 @@
 package net.ozwolf.raml.model;
 
-import net.ozwolf.raml.configuration.ApiSpecsConfiguration;
 import com.googlecode.totallylazy.Sequence;
+import net.ozwolf.raml.configuration.ApiSpecsConfiguration;
 import org.raml.model.Protocol;
 import org.raml.model.Raml;
+import org.raml.parser.visitor.RamlDocumentBuilder;
 
 import java.net.URI;
 import java.util.List;
 
-import static net.ozwolf.raml.utils.TotallyLazyHelper.*;
 import static com.googlecode.totallylazy.Sequences.sequence;
+import static net.ozwolf.raml.utils.TotallyLazyHelper.*;
 
 public class RamlModel {
     private final Raml raml;
     private final ApiSpecsConfiguration configuration;
 
-    public RamlModel(Raml raml, ApiSpecsConfiguration configuration) {
-        this.raml = raml;
+    public RamlModel(String specificationFile, ApiSpecsConfiguration configuration) {
+        this.raml = new RamlDocumentBuilder().build(specificationFile);
         this.configuration = configuration;
     }
 
@@ -60,7 +61,7 @@ public class RamlModel {
         return String.format("RAML = [%s - v%s]", raml.getTitle(), raml.getVersion());
     }
 
-    public static RamlModel model(Raml raml, ApiSpecsConfiguration configuration) {
-        return new RamlModel(raml, configuration);
+    public static RamlModel model(String specificationFile, ApiSpecsConfiguration configuration) {
+        return new RamlModel(specificationFile, configuration);
     }
 }

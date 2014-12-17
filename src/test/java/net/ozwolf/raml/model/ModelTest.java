@@ -6,13 +6,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.raml.model.ActionType;
 import org.raml.model.Protocol;
-import org.raml.parser.visitor.RamlDocumentBuilder;
 
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 
-import static net.ozwolf.raml.configuration.ApiSpecsConfiguration.configuration;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
+import static net.ozwolf.raml.configuration.ApiSpecsConfiguration.configuration;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -21,7 +20,7 @@ public class ModelTest {
 
     @BeforeClass
     public static void setUp() {
-        ModelTest.model = RamlModel.model(new RamlDocumentBuilder().build("apispecs-test/apispecs.raml"), configuration());
+        ModelTest.model = RamlModel.model("apispecs-test/apispecs.raml", configuration());
     }
 
     @Test

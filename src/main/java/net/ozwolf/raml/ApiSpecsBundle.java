@@ -24,11 +24,11 @@ import static net.ozwolf.raml.configuration.ApiSpecsConfiguration.configuration;
  * ```
  */
 public class ApiSpecsBundle implements Bundle {
-    private final Raml raml;
+    private final String specificationFile;
     private final ApiSpecsConfiguration configuration;
 
     private ApiSpecsBundle(String specificationFile, ApiSpecsConfiguration configuration) {
-        this.raml = new RamlDocumentBuilder().build(specificationFile);
+        this.specificationFile = specificationFile;
         this.configuration = configuration;
     }
 
@@ -40,7 +40,7 @@ public class ApiSpecsBundle implements Bundle {
 
     @Override
     public void run(Environment environment) {
-        environment.jersey().register(ApiResource.resource(raml, configuration));
+        environment.jersey().register(ApiResource.resource(specificationFile, configuration));
     }
 
     /**
