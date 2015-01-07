@@ -24,7 +24,7 @@ public class ApiResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public ApiView get() {
-        return ApiView.view(RamlModel.model(specificationFile, configuration));
+        return ApiView.view(new RamlModel(specificationFile, configuration));
     }
 
     @Path("/raw")

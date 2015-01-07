@@ -1,7 +1,5 @@
 package net.ozwolf.raml.model;
 
-import com.googlecode.totallylazy.Predicate;
-import com.googlecode.totallylazy.Sequence;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.raml.model.ActionType;
@@ -9,6 +7,8 @@ import org.raml.model.Protocol;
 
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.List;
+import java.util.function.Predicate;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static net.ozwolf.raml.configuration.ApiSpecsConfiguration.configuration;
@@ -20,7 +20,7 @@ public class ModelTest {
 
     @BeforeClass
     public static void setUp() {
-        ModelTest.model = RamlModel.model("apispecs-test/apispecs.raml", configuration());
+        ModelTest.model = new RamlModel("apispecs-test/apispecs.raml", configuration());
     }
 
     @Test
@@ -32,48 +32,48 @@ public class ModelTest {
 
     @Test
     public void shouldLoadResourcesAsModels() {
-        Sequence<RamlResourceModel> resources = model.getResources();
+        List<RamlResourceModel> resources = model.getResources();
 
         assertThat(resources.size(), is(1));
 
-        assertThat(resources.first().getId(), is("2f626f6f6b73"));
-        assertThat(resources.first().getDisplayName(), is("Books"));
-        assertThat(resources.first().getDescription(), is("<p>resource for getting and managing <code>books</code></p>\n"));
-        assertThat(resources.first().getUri(), is("/books"));
+        assertThat(resources.get(0).getId(), is("2f626f6f6b73"));
+        assertThat(resources.get(0).getDisplayName(), is("Books"));
+        assertThat(resources.get(0).getDescription(), is("<p>resource for getting and managing <code>books</code></p>\n"));
+        assertThat(resources.get(0).getUri(), is("/books"));
 
-        assertThat(resources.first().getActions().size(), is(2));
+        assertThat(resources.get(0).getActions().size(), is(2));
 
-        assertThat(resources.first().getResources().size(), is(1));
+        assertThat(resources.get(0).getResources().size(), is(1));
 
-        assertThat(resources.first().getResources().first().getId(), is("2f626f6f6b732f7b69647d"));
-        assertThat(resources.first().getResources().first().getActions().size(), is(1));
+        assertThat(resources.get(0).getResources().get(0).getId(), is("2f626f6f6b732f7b69647d"));
+        assertThat(resources.get(0).getResources().get(0).getActions().size(), is(1));
     }
 
     @Test
     public void shouldLoadDocumentation() {
-        Sequence<RamlDocumentationModel> documentation = model.getDocumentation();
+        List<RamlDocumentationModel> documentation = model.getDocumentation();
 
         assertThat(documentation.size(), is(1));
 
-        assertThat(documentation.first().getId(), is("53756d6d617279"));
-        assertThat(documentation.first().getTitle(), is("Summary"));
-        assertThat(documentation.first().getContent(), is("<h2>Summary</h2>\n<p>This API specification is for a test purposes only.  This should use <code>markdown4j</code> to parse the Markdown.</p>\n"));
+        assertThat(documentation.get(0).getId(), is("53756d6d617279"));
+        assertThat(documentation.get(0).getTitle(), is("Summary"));
+        assertThat(documentation.get(0).getContent(), is("<h2>Summary</h2>\n<p>This API specification is for a test purposes only.  This should use <code>markdown4j</code> to parse the Markdown.</p>\n"));
     }
 
     @Test
     public void shouldLoadPostActionInformation() throws IOException {
-        Sequence<RamlResourceModel> resources = model.getResources();
+        List<RamlResourceModel> resources = model.getResources();
 
         assertThat(resources.size(), is(1));
 
-        assertThat(resources.first().getUri(), is("/books"));
+        assertThat(resources.get(0).getUri(), is("/books"));
 
-        Sequence<RamlActionModel> actions = resources.first().getActions();
+        List<RamlActionModel> actions = resources.get(0).getActions();
 
         assertThat(actions.size(), is(2));
 
-        RamlActionModel post = actions.find(forType(ActionType.POST))
-                .getOrThrow(new IllegalArgumentException("No [POST] action found on resource"));
+        RamlActionModel post = actions.stream().filter(forType(ActionType.POST)).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No [POST] action found on resource"));
 
         // Test basic action information
         assertThat(post.getType(), is("POST"));
@@ -82,32 +82,34 @@ public class ModelTest {
 
         // Test security information
         assertThat(post.getSecurity().size(), is(1));
-        verifyBasicSecurity(post.getSecurity().first());
+        verifyBasicSecurity(post.getSecurity().get(0));
 
         // Test request information
         assertThat(post.getRequests().size(), is(1));
-        assertThat(post.getRequests().first().getId(), is("6170706c69636174696f6e2f6a736f6e"));
-        assertThat(post.getRequests().first().getContentType(), is("application/json"));
-        assertThat(post.getRequests().first().isJson(), is(true));
+        assertThat(post.getRequests().get(0).getId(), is("6170706c69636174696f6e2f6a736f6e"));
+        assertThat(post.getRequests().get(0).getContentType(), is("application/json"));
+        assertThat(post.getRequests().get(0).isJson(), is(true));
 
-        assertThat(post.getRequests().first().getHeaders().size(), is(1));
-        assertThat(post.getRequests().first().getHeaders().first().getName(), is("x-call-id"));
-        assertThat(post.getRequests().first().getHeaders().first().getDisplay(), is("abcd-efab-1234-5678"));
-        assertThat(post.getRequests().first().getHeaders().first().getDisplay(), is("abcd-efab-1234-5678"));
+        assertThat(post.getRequests().get(0).getHeaders().size(), is(1));
+        assertThat(post.getRequests().get(0).getHeaders().get(0).getName(), is("x-call-id"));
+        assertThat(post.getRequests().get(0).getHeaders().get(0).getDisplay(), is("abcd-efab-1234-5678"));
+        assertThat(post.getRequests().get(0).getHeaders().get(0).getDisplay(), is("abcd-efab-1234-5678"));
 
-        assertThat(post.getRequests().first().getExample(), is(fixture("apispecs-test/examples/book-post-request.json")));
-        assertThat(post.getRequests().first().getSchema(), is(fixture("apispecs-test/schemas/book-request.json")));
+        assertThat(post.getRequests().get(0).getExample(), is(fixture("apispecs-test/examples/book-post-request.json")));
+        assertThat(post.getRequests().get(0).getSchema(), is(fixture("apispecs-test/schemas/book-request.json")));
 
         // Test parameter information
         assertThat(post.getParameters().size(), is(1));
-        assertThat(post.getParameters().first().getName(), is("x-call-id"));
+        assertThat(post.getParameters().get(0).getName(), is("x-call-id"));
 
         // Test response information
         assertThat(post.getResponses().size(), is(2));
 
         RamlResponseModel response = post.getResponses()
-                .find(forCodeAndContentType(201, MediaType.APPLICATION_JSON))
-                .getOrThrow(new IllegalArgumentException("No response found for [201, application/json]"));
+                .stream()
+                .filter(forCodeAndContentType(201, MediaType.APPLICATION_JSON))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No response found for [201, application/json]"));
 
         assertThat(response.getDescription(), is("<p>book successfully added to collection</p>\n"));
         assertThat(response.getCode(), is(201));
@@ -119,18 +121,18 @@ public class ModelTest {
 
     @Test
     public void shouldLoadGetActionInformationForList() {
-        Sequence<RamlResourceModel> resources = model.getResources();
+        List<RamlResourceModel> resources = model.getResources();
 
         assertThat(resources.size(), is(1));
 
-        assertThat(resources.first().getUri(), is("/books"));
+        assertThat(resources.get(0).getUri(), is("/books"));
 
-        Sequence<RamlActionModel> actions = resources.first().getActions();
+        List<RamlActionModel> actions = resources.get(0).getActions();
 
         assertThat(actions.size(), is(2));
 
-        RamlActionModel get = actions.find(forType(ActionType.GET))
-                .getOrThrow(new IllegalArgumentException("No [GET] action found on resource"));
+        RamlActionModel get = actions.stream().filter(forType(ActionType.GET))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("No [GET] action found on resource"));
 
         // Test basic action information
         assertThat(get.getType(), is("GET"));
@@ -139,76 +141,65 @@ public class ModelTest {
 
         // Test security information
         assertThat(get.getSecurity().size(), is(1));
-        assertThat(get.getSecurity().first().getQueryParameters().size(), is(1));
-        assertThat(get.getSecurity().first().getQueryParameters().first().getName(), is("custom-sec"));
+        assertThat(get.getSecurity().get(0).getQueryParameters().size(), is(1));
+        assertThat(get.getSecurity().get(0).getQueryParameters().get(0).getName(), is("custom-sec"));
 
         // Test request information
         assertThat(get.getRequests(), empty());
 
         // Test parameter information
         assertThat(get.getParameters().size(), is(1));
-        assertThat(get.getParameters().first().getName(), is("genre"));
-        assertThat(get.getParameters().first().getDescription(), is("<p>the genre to filter on</p>\n"));
-        assertThat(get.getParameters().first().getDataType(), is("string"));
-        assertThat(get.getParameters().first().getFlags(), is("optional"));
-        assertThat(get.getParameters().first().getAllowedValues().size(), is(6));
-        assertThat(get.getParameters().first().getAllowedValues(), hasItems("War", "Crime", "Sci-Fi", "Romance", "Comedy", "Fantasy"));
-        assertThat(get.getParameters().first().getPattern(), nullValue());
-        assertThat(get.getParameters().first().getExample(), is("War"));
-        assertThat(get.getParameters().first().getDisplay(), is("War"));
-        assertThat(get.getParameters().first().getDefault(), is("War"));
+        assertThat(get.getParameters().get(0).getName(), is("genre"));
+        assertThat(get.getParameters().get(0).getDescription(), is("<p>the genre to filter on</p>\n"));
+        assertThat(get.getParameters().get(0).getDataType(), is("string"));
+        assertThat(get.getParameters().get(0).getFlags(), is("optional"));
+        assertThat(get.getParameters().get(0).getAllowedValues().size(), is(6));
+        assertThat(get.getParameters().get(0).getAllowedValues(), hasItems("War", "Crime", "Sci-Fi", "Romance", "Comedy", "Fantasy"));
+        assertThat(get.getParameters().get(0).getPattern(), nullValue());
+        assertThat(get.getParameters().get(0).getExample(), is("War"));
+        assertThat(get.getParameters().get(0).getDisplay(), is("War"));
+        assertThat(get.getParameters().get(0).getDefault(), is("War"));
     }
 
     @Test
     public void shouldLoadHeaderInformationFromResponse() {
-        Sequence<RamlResourceModel> resources = model.getResources();
+        List<RamlResourceModel> resources = model.getResources();
 
         assertThat(resources.size(), is(1));
 
-        Sequence<RamlResourceModel> children = resources.first().getResources();
+        List<RamlResourceModel> children = resources.get(0).getResources();
 
         assertThat(children.size(), is(1));
 
-        assertThat(children.first().getUri(), is("/books/{id}"));
+        assertThat(children.get(0).getUri(), is("/books/{id}"));
 
-        RamlResponseModel response = children.first()
+        RamlResponseModel response = children.get(0)
                 .getActions()
-                .find(forType(ActionType.GET))
-                .getOrThrow(new IllegalArgumentException("Could not find [GET] action"))
+                .stream().filter(forType(ActionType.GET))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("Could not find [GET] action"))
                 .getResponses()
-                .find(forCodeAndContentType(200, MediaType.APPLICATION_JSON))
-                .getOrThrow(new IllegalArgumentException("No response found for [200, application/json]"));
+                .stream().filter(forCodeAndContentType(200, MediaType.APPLICATION_JSON))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("No response found for [200, application/json]"));
 
         assertThat(response.getHeaders().size(), is(1));
-        assertThat(response.getHeaders().first().getName(), is("x-call-id"));
-        assertThat(response.getHeaders().first().getDisplay(), is("abcd-efab-1234-5678"));
+        assertThat(response.getHeaders().get(0).getName(), is("x-call-id"));
+        assertThat(response.getHeaders().get(0).getDisplay(), is("abcd-efab-1234-5678"));
     }
 
     private void verifyBasicSecurity(RamlSecurityModel model) {
         assertThat(model.getType(), is("basic"));
         assertThat(model.getHeaders().size(), is(1));
-        assertThat(model.getHeaders().first().getName(), is("Authorization"));
-        assertThat(model.getHeaders().first().getDisplay(), is("Basic (.*)"));
+        assertThat(model.getHeaders().get(0).getName(), is("Authorization"));
+        assertThat(model.getHeaders().get(0).getDisplay(), is("Basic (.*)"));
         assertThat(model.getResponses().size(), is(1));
-        assertThat(model.getResponses().first().first(), is(401));
-        assertThat(model.getResponses().first().second(), is("Invalid username or password provided\n"));
+        assertThat(model.getResponses().get(401), is("Invalid username or password provided\n"));
     }
 
     private static Predicate<RamlActionModel> forType(final ActionType actionType) {
-        return new Predicate<RamlActionModel>() {
-            @Override
-            public boolean matches(RamlActionModel model) {
-                return model.getType().equals(actionType.name());
-            }
-        };
+        return model -> model.getType().equals(actionType.name());
     }
 
     private static Predicate<RamlResponseModel> forCodeAndContentType(final Integer code, final String contentType) {
-        return new Predicate<RamlResponseModel>() {
-            @Override
-            public boolean matches(RamlResponseModel model) {
-                return model.getCode().equals(code) && model.getContentType().equals(contentType);
-            }
-        };
+        return model1 -> model1.getCode().equals(code) && model1.getContentType().equals(contentType);
     }
 }

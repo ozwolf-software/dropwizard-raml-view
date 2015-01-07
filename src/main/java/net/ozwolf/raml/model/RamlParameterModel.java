@@ -1,13 +1,15 @@
 package net.ozwolf.raml.model;
 
-import com.googlecode.totallylazy.Sequence;
+import org.apache.commons.lang.StringUtils;
 import org.raml.model.parameter.AbstractParam;
 import org.raml.model.parameter.Header;
 import org.raml.model.parameter.QueryParameter;
 import org.raml.model.parameter.UriParameter;
 
+import java.util.List;
+
+import static com.google.common.collect.Lists.newArrayList;
 import static net.ozwolf.raml.utils.MarkDownHelper.fromMarkDown;
-import static com.googlecode.totallylazy.Sequences.sequence;
 
 public class RamlParameterModel {
     private final String name;
@@ -34,9 +36,9 @@ public class RamlParameterModel {
     }
 
     public String getFlags() {
-        Sequence<String> flags = sequence(parameter.isRequired() ? "required" : "optional");
-        if (parameter.isRepeat()) flags = flags.append("repeatable");
-        return flags.toString(", ");
+        List<String> flags = newArrayList(parameter.isRequired() ? "required" : "optional");
+        if (parameter.isRepeat()) flags.add("repeatable");
+        return StringUtils.join(flags, ", ");
     }
 
     public String getDescription() {
@@ -51,12 +53,12 @@ public class RamlParameterModel {
         return parameter.getExample();
     }
 
-    public String getDefault(){
+    public String getDefault() {
         return parameter.getDefaultValue();
     }
 
-    public Sequence<String> getAllowedValues() {
-        return sequence(parameter.getEnumeration());
+    public List<String> getAllowedValues() {
+        return parameter.getEnumeration();
     }
 
     public String getDisplay() {
@@ -66,11 +68,7 @@ public class RamlParameterModel {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("Parameter = [%s - %s]", getName(), getParameterType());
-    }
-
-    public static RamlParameterModel model(String name, AbstractParam parameter) {
-        return new RamlParameterModel(name, parameter);
     }
 }

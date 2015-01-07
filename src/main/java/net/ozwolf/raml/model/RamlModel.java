@@ -1,6 +1,5 @@
 package net.ozwolf.raml.model;
 
-import com.googlecode.totallylazy.Sequence;
 import net.ozwolf.raml.configuration.ApiSpecsConfiguration;
 import org.raml.model.Protocol;
 import org.raml.model.Raml;
@@ -9,8 +8,8 @@ import org.raml.parser.visitor.RamlDocumentBuilder;
 import java.net.URI;
 import java.util.List;
 
-import static com.googlecode.totallylazy.Sequences.sequence;
-import static net.ozwolf.raml.utils.TotallyLazyHelper.*;
+import static com.google.common.collect.Lists.newArrayList;
+import static java.util.stream.Collectors.toList;
 
 public class RamlModel {
     private final Raml raml;
@@ -29,9 +28,9 @@ public class RamlModel {
         return raml.getVersion();
     }
 
-    public Sequence<Protocol> getProtocols() {
-        if (raml.getProtocols() == null || raml.getProtocols().isEmpty()) return sequence(Protocol.HTTP);
-        return sequence(raml.getProtocols());
+    public List<Protocol> getProtocols() {
+        if (raml.getProtocols() == null || raml.getProtocols().isEmpty()) return newArrayList(Protocol.HTTP);
+        return raml.getProtocols();
     }
 
     public boolean hasStylesheets() {
@@ -42,26 +41,31 @@ public class RamlModel {
         return configuration.getStylesheets();
     }
 
-    public Sequence<RamlDocumentationModel> getDocumentation() {
-        if (raml.getDocumentation() == null) return sequence();
-        return sequence(raml.getDocumentation()).map(asRamlDocumentationModel());
+    public List<RamlDocumentationModel> getDocumentation() {
+        if (raml.getDocumentation() == null) return newArrayList();
+        return raml.getDocumentation().stream()
+                .map(RamlDocumentationModel::new)
+                .collect(toList());
     }
 
-    public Sequence<RamlResourceModel> getResources() {
-        if (raml.getResources() == null) return sequence();
-        return sequence(raml.getResources().values()).map(asRamlResourceModel(getSecurity()));
+    public List<RamlResourceModel> getResources() {
+        if (raml.getResources() == null) return newArrayList();
+        return raml.getResources().values().stream()
+                .map(v -> new RamlResourceModel(v, getSecurity()))
+                .collect(toList());
     }
 
-    private Sequence<RamlSecurityModel> getSecurity() {
-        return sequence(raml.getSecuritySchemes()).map(asRamlSecurityModel());
+    private List<RamlSecurityModel> getSecurity() {
+        return raml.getSecuritySchemes().stream()
+                .map(s -> new RamlSecurityModel(
+                        s.entrySet().stream().findFirst().get().getKey(),
+                        s.entrySet().stream().findFirst().get().getValue()
+                ))
+                .collect(toList());
     }
 
     @Override
     public String toString() {
         return String.format("RAML = [%s - v%s]", raml.getTitle(), raml.getVersion());
-    }
-
-    public static RamlModel model(String specificationFile, ApiSpecsConfiguration configuration) {
-        return new RamlModel(specificationFile, configuration);
     }
 }

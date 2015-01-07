@@ -26,11 +26,7 @@ public class RamlDocumentationModel {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("Documentation = [%s]", getTitle());
-    }
-
-    public static RamlDocumentationModel model(DocumentationItem item) {
-        return new RamlDocumentationModel(item);
     }
 }

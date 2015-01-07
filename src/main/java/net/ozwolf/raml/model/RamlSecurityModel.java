@@ -1,17 +1,14 @@
 package net.ozwolf.raml.model;
 
-import com.googlecode.totallylazy.Callable1;
-import com.googlecode.totallylazy.Pair;
-import com.googlecode.totallylazy.Sequence;
 import org.apache.commons.codec.binary.Hex;
-import org.raml.model.Response;
 import org.raml.model.SecurityScheme;
 
+import java.util.List;
 import java.util.Map;
 
-import static net.ozwolf.raml.utils.TotallyLazyHelper.asRamlHeaderModel;
-import static net.ozwolf.raml.utils.TotallyLazyHelper.queryParameterToModel;
-import static com.googlecode.totallylazy.Sequences.sequence;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
+import static java.util.stream.Collectors.toList;
 
 public class RamlSecurityModel {
     private final String name;
@@ -34,20 +31,32 @@ public class RamlSecurityModel {
         return security.getType();
     }
 
-    public Sequence<RamlHeaderModel> getHeaders() {
-        if (security.getDescribedBy() == null || security.getDescribedBy().getHeaders() == null) return sequence();
-        return sequence(security.getDescribedBy().getHeaders().entrySet()).map(asRamlHeaderModel());
+    public List<RamlHeaderModel> getHeaders() {
+        if (security.getDescribedBy() == null || security.getDescribedBy().getHeaders() == null) return newArrayList();
+        return security.getDescribedBy().getHeaders().entrySet().stream()
+                .map(e -> new RamlHeaderModel(e.getKey(), e.getValue()))
+                .collect(toList());
     }
 
-    public Sequence<RamlParameterModel> getQueryParameters() {
+    public List<RamlParameterModel> getQueryParameters() {
         if (security.getDescribedBy() == null || security.getDescribedBy().getQueryParameters() == null)
-            return sequence();
-        return sequence(security.getDescribedBy().getQueryParameters().entrySet()).map(queryParameterToModel());
+            return newArrayList();
+        return security.getDescribedBy().getQueryParameters().entrySet().stream()
+                .map(e -> new RamlParameterModel(e.getKey(), e.getValue()))
+                .collect(toList());
     }
 
-    public Sequence<Pair<Integer, String>> getResponses() {
-        if (security.getDescribedBy() == null || security.getDescribedBy().getResponses() == null) return sequence();
-        return sequence(security.getDescribedBy().getResponses().entrySet()).map(asSecurityResponse());
+    public Map<Integer, String> getResponses() {
+        Map<Integer, String> responses = newHashMap();
+        if (security.getDescribedBy() == null || security.getDescribedBy().getResponses() == null) return responses;
+
+        security.getDescribedBy().getResponses().entrySet().stream()
+                .forEach(e -> {
+                    Integer code = Integer.valueOf(e.getKey());
+                    String description = e.getValue().getDescription() == null ? "" : e.getValue().getDescription();
+                    responses.put(code, description);
+                });
+        return responses;
     }
 
     public static RamlSecurityModel model(String name, SecurityScheme security) {
@@ -55,18 +64,8 @@ public class RamlSecurityModel {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("Security = [%s]", getType());
     }
 
-    private static Callable1<Map.Entry<String, Response>, Pair<Integer, String>> asSecurityResponse() {
-        return new Callable1<Map.Entry<String, Response>, Pair<Integer, String>>() {
-            @Override
-            public Pair<Integer, String> call(Map.Entry<String, Response> response) throws Exception {
-                Integer code = Integer.valueOf(response.getKey());
-                String description = (response.getValue().getDescription() == null) ? "" : response.getValue().getDescription();
-                return Pair.pair(code, description);
-            }
-        };
-    }
 }

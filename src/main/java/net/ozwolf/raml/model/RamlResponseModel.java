@@ -1,20 +1,20 @@
 package net.ozwolf.raml.model;
 
-import com.googlecode.totallylazy.Sequence;
 import org.apache.commons.codec.binary.Hex;
 import org.raml.model.MimeType;
 
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 import static net.ozwolf.raml.utils.MarkDownHelper.fromMarkDown;
 
 public class RamlResponseModel {
     private final Integer code;
     private final String description;
-    private final Sequence<RamlHeaderModel> headers;
+    private final List<RamlHeaderModel> headers;
     private final MimeType mimeType;
 
-    public RamlResponseModel(Integer code, String description, Sequence<RamlHeaderModel> headers, MimeType mimeType) {
+    public RamlResponseModel(Integer code, String description, List<RamlHeaderModel> headers, MimeType mimeType) {
         this.code = code;
         this.description = description;
         this.headers = headers;
@@ -33,7 +33,7 @@ public class RamlResponseModel {
         return code;
     }
 
-    public Sequence<RamlHeaderModel> getHeaders() {
+    public List<RamlHeaderModel> getHeaders() {
         return headers;
     }
 
@@ -56,9 +56,5 @@ public class RamlResponseModel {
     @Override
     public String toString() {
         return String.format("Response = [%d - %s]", getCode(), getContentType());
-    }
-
-    public static RamlResponseModel model(Integer code, String description, Sequence<RamlHeaderModel> headers, MimeType mimeType) {
-        return new RamlResponseModel(code, description, headers, mimeType);
     }
 }

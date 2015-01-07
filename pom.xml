@@ -6,10 +6,10 @@
 
     <groupId>net.ozwolf</groupId>
     <artifactId>dropwizard-raml-view</artifactId>
-    <version>0.7-10</version>
+    <version>dw7-jdk8-1</version>
 
     <properties>
-        <compile.level>1.7</compile.level>
+        <compile.level>1.8</compile.level>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Runtime Library Versions -->
@@ -18,7 +18,6 @@
         <commons.codec.version>1.7</commons.codec.version>
         <raml.parser.version>0.8.10</raml.parser.version>
         <markdown4j.version>2.2-cj-1.0</markdown4j.version>
-        <totallylazy.version>1170</totallylazy.version>
 
         <!-- Testing Library Versions -->
         <junit.version>4.11</junit.version>
@@ -31,11 +30,6 @@
     </properties>
 
     <repositories>
-        <repository>
-            <id>bodar</id>
-            <name>Bodar Repository</name>
-            <url>http://repo.bodar.com/</url>
-        </repository>
         <repository>
             <id>mulesoft-releases</id>
             <name>MuleSoft Releases Repository</name>
@@ -85,11 +79,6 @@
             <groupId>org.commonjava.googlecode.markdown4j</groupId>
             <artifactId>markdown4j</artifactId>
             <version>${markdown4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.totallylazy</groupId>
-            <artifactId>totallylazy</artifactId>
-            <version>${totallylazy.version}</version>
         </dependency>
 
         <!-- Testing Libraries -->

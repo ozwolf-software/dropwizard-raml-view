@@ -1,22 +1,21 @@
 package net.ozwolf.raml.model;
 
-import com.googlecode.totallylazy.Predicate;
-import com.googlecode.totallylazy.Sequence;
-import com.googlecode.totallylazy.Sequences;
 import org.raml.model.Action;
+import org.raml.model.MimeType;
 import org.raml.model.SecurityReference;
 
 import java.util.List;
+import java.util.Map;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static java.util.stream.Collectors.toList;
 import static net.ozwolf.raml.utils.MarkDownHelper.fromMarkDown;
-import static net.ozwolf.raml.utils.TotallyLazyHelper.*;
-import static com.googlecode.totallylazy.Sequences.sequence;
 
 public class RamlActionModel {
     private final Action action;
-    private final Sequence<RamlSecurityModel> securityModels;
+    private final List<RamlSecurityModel> securityModels;
 
-    public RamlActionModel(Action action, Sequence<RamlSecurityModel> securityModels) {
+    public RamlActionModel(Action action, List<RamlSecurityModel> securityModels) {
         this.action = action;
         this.securityModels = securityModels;
     }
@@ -30,56 +29,79 @@ public class RamlActionModel {
         return fromMarkDown(action.getDescription());
     }
 
-    public Sequence<RamlParameterModel> getParameters() {
-        Sequence<RamlParameterModel> uriParameters = sequence();
+    public List<RamlParameterModel> getParameters() {
+        List<RamlParameterModel> parameters = newArrayList();
 
         if (action.getResource().getResolvedUriParameters() != null)
-            uriParameters = sequence(action.getResource().getResolvedUriParameters().entrySet()).map(uriParameterToModel());
+            parameters.addAll(
+                    action.getResource()
+                            .getResolvedUriParameters().entrySet().stream()
+                            .map(e -> new RamlParameterModel(e.getKey(), e.getValue()))
+                            .collect(toList())
+            );
 
-        Sequence<RamlParameterModel> queryParameters = sequence();
         if (action.getQueryParameters() != null)
-            queryParameters = sequence(action.getQueryParameters().entrySet()).map(queryParameterToModel());
+            parameters.addAll(
+                    action.getQueryParameters().entrySet().stream()
+                            .map(e -> new RamlParameterModel(e.getKey(), e.getValue()))
+                            .collect(toList())
+            );
 
-        Sequence<RamlParameterModel> headerParameters = sequence();
         if (action.getHeaders() != null)
-            headerParameters = sequence(action.getHeaders().entrySet()).map(headerParameterToModel());
+            parameters.addAll(
+                    action.getHeaders().entrySet().stream()
+                            .map(e -> new RamlParameterModel(e.getKey(), e.getValue()))
+                            .collect(toList())
+            );
 
-        return uriParameters.join(queryParameters).join(headerParameters);
+        return parameters;
     }
 
-    public Sequence<RamlRequestModel> getRequests() {
-        if (action.getBody() == null) return sequence();
-        Sequence<RamlHeaderModel> headers = sequence();
-        if (action.getHeaders() != null) headers = sequence(action.getHeaders().entrySet()).map(asRamlHeaderModel());
-        return sequence(action.getBody().values()).map(asRamlRequestModel(headers));
+    public List<RamlRequestModel> getRequests() {
+        if (action.getBody() == null) return newArrayList();
+        final List<RamlHeaderModel> headers = newArrayList();
+        if (action.getHeaders() != null)
+            headers.addAll(action.getHeaders().entrySet()
+                    .stream()
+                    .map(e -> new RamlHeaderModel(e.getKey(), e.getValue()))
+                    .collect(toList()));
+        return action.getBody().values().stream().map(v -> new RamlRequestModel(v, headers)).collect(toList());
     }
 
-    public Sequence<RamlResponseModel> getResponses() {
-        if (action.getResponses() == null) return sequence();
-        return sequence(action.getResponses().entrySet()).fold(Sequences.<RamlResponseModel>sequence(), asRamlResponseModel());
+    public List<RamlResponseModel> getResponses() {
+        if (action.getResponses() == null) return newArrayList();
+        return newArrayList(action.getResponses().entrySet())
+                .stream()
+                .map(
+                        e -> {
+                            List<RamlResponseModel> models = newArrayList();
+
+                            Integer code = Integer.valueOf(e.getKey());
+                            String description = e.getValue().getDescription();
+                            Map<String, MimeType> body = e.getValue().getBody();
+                            List<RamlHeaderModel> headers = e.getValue().getHeaders().entrySet().stream()
+                                    .map(h -> new RamlHeaderModel(h.getKey(), h.getValue()))
+                                    .collect(toList());
+
+                            body.entrySet().stream()
+                                    .forEach(m -> models.add(new RamlResponseModel(code, description, headers, m.getValue())));
+
+                            return models;
+                        }
+                )
+                .reduce(newArrayList(), (a, b) -> {
+                    a.addAll(b);
+                    return a;
+                });
     }
 
-    public Sequence<RamlSecurityModel> getSecurity() {
-        return securityModels.filter(forReferences(action.getSecuredBy()));
+    public List<RamlSecurityModel> getSecurity() {
+        return securityModels.stream()
+                .filter(m -> action.getSecuredBy().stream().map(SecurityReference::getName).anyMatch(s -> s.equals(m.getName())))
+                .collect(toList());
     }
 
     public boolean isDeprecated() {
         return action.getIs().contains("deprecated");
-    }
-
-    public static RamlActionModel model(Action action, Sequence<RamlSecurityModel> securityModels) {
-        return new RamlActionModel(action, securityModels);
-    }
-
-    private static Predicate<RamlSecurityModel> forReferences(final List<SecurityReference> references) {
-        return new Predicate<RamlSecurityModel>() {
-            @Override
-            public boolean matches(RamlSecurityModel model) {
-                for (SecurityReference reference : references)
-                    if (model.getName().equals(reference.getName())) return true;
-
-                return false;
-            }
-        };
     }
 }

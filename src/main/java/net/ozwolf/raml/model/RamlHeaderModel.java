@@ -11,22 +11,18 @@ public class RamlHeaderModel {
         this.header = header;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public String getDisplay(){
+    public String getDisplay() {
         if (header.getPattern() != null) return header.getPattern();
         if (header.getExample() != null) return header.getExample();
         return "value";
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("Header = [%s]", getName());
-    }
-
-    public static RamlHeaderModel model(String name, Header header){
-        return new RamlHeaderModel(name, header);
     }
 }
