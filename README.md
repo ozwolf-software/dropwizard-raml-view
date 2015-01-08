@@ -35,7 +35,7 @@ The following endpoints will be made available on your service:
 To add this bundle to your service and expose a RAML specification under the `/api` resource.
 
 ```java
-bootstrap.addBundle(ApiSpecsBundle.bundle("apispecs/apispecs.raml"));
+bootstrap.addBundle(RamlView.bundle("apispecs/apispecs.raml"));
 ```
 
 ## Functionality Caveat

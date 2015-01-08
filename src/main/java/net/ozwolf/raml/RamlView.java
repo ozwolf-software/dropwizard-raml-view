@@ -7,8 +7,6 @@ import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
-import org.raml.model.Raml;
-import org.raml.parser.visitor.RamlDocumentBuilder;
 
 import static net.ozwolf.raml.configuration.ApiSpecsConfiguration.configuration;
 
@@ -20,14 +18,14 @@ import static net.ozwolf.raml.configuration.ApiSpecsConfiguration.configuration;
  * ## Example Usage
  *
  * ```java
- * bootstrap.addBundle(ApiSpecificationBundle.bundle("apispecs/apispecs.raml"));
+ * bootstrap.addBundle(RamlView.view("apispecs/apispecs.raml"));
  * ```
  */
-public class ApiSpecsBundle implements Bundle {
+public class RamlView implements Bundle {
     private final String specificationFile;
     private final ApiSpecsConfiguration configuration;
 
-    private ApiSpecsBundle(String specificationFile, ApiSpecsConfiguration configuration) {
+    private RamlView(String specificationFile, ApiSpecsConfiguration configuration) {
         this.specificationFile = specificationFile;
         this.configuration = configuration;
     }
@@ -49,8 +47,8 @@ public class ApiSpecsBundle implements Bundle {
      * @param specificationFile The path to the specification resource
      * @return The DropWizard bundle
      */
-    public static ApiSpecsBundle bundle(String specificationFile) {
-        return new ApiSpecsBundle(specificationFile, configuration());
+    public static RamlView bundle(String specificationFile) {
+        return new RamlView(specificationFile, configuration());
     }
 
     /**
@@ -60,7 +58,7 @@ public class ApiSpecsBundle implements Bundle {
      * @param configuration     The API specs configuration
      * @return The DropWizard bundle.
      */
-    public static ApiSpecsBundle bundle(String specificationFile, ApiSpecsConfiguration configuration) {
-        return new ApiSpecsBundle(specificationFile, configuration);
+    public static RamlView bundle(String specificationFile, ApiSpecsConfiguration configuration) {
+        return new RamlView(specificationFile, configuration);
     }
 }
