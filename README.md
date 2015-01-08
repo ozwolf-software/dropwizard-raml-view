@@ -12,10 +12,10 @@ This project has 3 compatability branches:
 
 + **DropWizard 0.7** for **Java 8** - `LIVE` - New features will be applied primarily to this branch.
     + *Version Numbers* 
-        + `{jdk-version}.{dropwizard-version}.{increment}` (eg. `8.7.3`)
+        + `3.*`
 + **DropWizard 0.7** for **Java 7** - `MAINTENANCE` - Only "must-have" features will be applied.
-    + *Version Numbers* 
-        + `{jdk-version}.{dropwizard-version}.{increment}` (eg. `7.7.3`)
+    + *Version Numbers*
+        + `2.*`
         + `0.7-*`
 + **DropWizard 0.6** for **Java 7** - `END OF LIFE` - This branch is no longer maintained.
     + *Version Numbers*
