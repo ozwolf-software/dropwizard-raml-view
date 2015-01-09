@@ -197,9 +197,9 @@
         [#if security.responses?has_content]
             <h5>Responses</h5>
             <div class="highlight-block">
-                [#list security.responses as response]
+                [#list security.responses?keys as key]
                     <p>
-                        <span class="label">${response.first()}</span>: <span class="value">${response.second()}</span>
+                        <span class="label">${key}</span>: <span class="value">${security.responses[key]}</span>
                     </p>
                 [/#list]
             </div>
