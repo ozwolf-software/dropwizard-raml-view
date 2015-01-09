@@ -13,7 +13,7 @@
     [/#if]
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+    <script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css&skin=default"></script>
 
     <script type="text/javascript">
         function toggleItemVisibility(id) {
