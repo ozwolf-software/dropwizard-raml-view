@@ -46,15 +46,14 @@ public class RamlSecurityModel {
                 .collect(toList());
     }
 
-    public Map<Integer, String> getResponses() {
-        Map<Integer, String> responses = newHashMap();
+    public Map<String, String> getResponses() {
+        Map<String, String> responses = newHashMap();
         if (security.getDescribedBy() == null || security.getDescribedBy().getResponses() == null) return responses;
 
         security.getDescribedBy().getResponses().entrySet().stream()
                 .forEach(e -> {
-                    Integer code = Integer.valueOf(e.getKey());
                     String description = e.getValue().getDescription() == null ? "" : e.getValue().getDescription();
-                    responses.put(code, description);
+                    responses.put(e.getKey(), description);
                 });
         return responses;
     }

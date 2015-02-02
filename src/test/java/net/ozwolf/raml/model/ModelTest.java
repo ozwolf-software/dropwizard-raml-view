@@ -192,7 +192,7 @@ public class ModelTest {
         assertThat(model.getHeaders().get(0).getName(), is("Authorization"));
         assertThat(model.getHeaders().get(0).getDisplay(), is("Basic (.*)"));
         assertThat(model.getResponses().size(), is(1));
-        assertThat(model.getResponses().get(401), is("Invalid username or password provided\n"));
+        assertThat(model.getResponses().get("401"), is("Invalid username or password provided\n"));
     }
 
     private static Predicate<RamlActionModel> forType(final ActionType actionType) {
