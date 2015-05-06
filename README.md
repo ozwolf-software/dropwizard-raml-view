@@ -1,6 +1,6 @@
 # DropWizard RAML API Resource Bundle
 
-[![Build Status](https://travis-ci.org/ozwolf-software/dropwizard-raml-view.svg?branch=dropwizard-0.7-jdk-8)](https://travis-ci.org/ozwolf-software/dropwizard-raml-view)
+[![Build Status](https://travis-ci.org/ozwolf-software/dropwizard-raml-view.svg?branch=dropwizard-0.8-jdk-8)](https://travis-ci.org/ozwolf-software/dropwizard-raml-view)
 
 This bundle allows a RAML specification to be attached to the resources of the service, exposing a human-readable, HTML representation of the RAML specification on the `/api` resource.
 
@@ -10,9 +10,12 @@ The RAML specification documentation can be found [`here`](https://github.com/ra
 
 ## Compatability
 
-This project has 3 compatability branches:
+This project has 4 compatability branches:
 
-+ **DropWizard 0.7** for **Java 8** - `LIVE` - New features will be applied primarily to this branch.
++ **DropWizard 0.8** for **Java 8** - `LIVE` - New features will be applied primarily to this branch.
+    + *Version Numbers* 
+        + `4.*`
++ **DropWizard 0.7** for **Java 8** - `MAINTENANCE` - New features will be applied primarily to this branch.
     + *Version Numbers* 
         + `3.*`
 + **DropWizard 0.7** for **Java 7** - `MAINTENANCE` - Only "must-have" features will be applied.
