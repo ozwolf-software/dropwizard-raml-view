@@ -13,10 +13,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Runtime Library Versions -->
-        <dropwizard.version>0.8.1</dropwizard.version>
+        <dropwizard.version>0.9.2</dropwizard.version>
         <commons.lang.version>3.1</commons.lang.version>
         <commons.codec.version>1.7</commons.codec.version>
-        <raml.parser.version>0.8.12</raml.parser.version>
+        <raml.parser.version>0.8.14</raml.parser.version>
         <markdown4j.version>2.2-cj-1.0</markdown4j.version>
 
         <!-- Testing Library Versions -->
