@@ -1,6 +1,6 @@
 # DropWizard RAML API Resource Bundle
 
-[![Build Status](https://travis-ci.org/ozwolf-software/dropwizard-raml-view.svg?branch=dropwizard-0.8-jdk-8)](https://travis-ci.org/ozwolf-software/dropwizard-raml-view)
+[![Build Status](https://travis-ci.org/ozwolf-software/dropwizard-raml-view.svg?branch=master)](https://travis-ci.org/ozwolf-software/dropwizard-raml-view)
 
 This bundle allows a RAML specification to be attached to the resources of the service, exposing a human-readable, HTML representation of the RAML specification on the `/api` resource.
 
