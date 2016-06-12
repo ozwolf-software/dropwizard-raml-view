@@ -8,11 +8,17 @@ This bundle allows a RAML specification to be attached to the resources of the s
 
 The RAML specification documentation can be found [`here`](https://github.com/raml-org/raml-spec)
 
+**Note:** This library currently only supports RAML 0.8.
+
 ## Compatability
 
 This project has 4 compatability branches:
 
-+ **DropWizard 0.8** for **Java 8** - `LIVE` - New features will be applied primarily to this branch.
++ (**MASTER**) **DropWizard 0.9** for **Java 7** - `LIVE` -  New features will be applied primarily to this branch.
+    + *Version Numbers*
+        + `0.9.2.*`
+
++ **DropWizard 0.8** for **Java 8** - `MAINTENANCE` - New features will be applied primarily to this branch.
     + *Version Numbers* 
         + `4.*`
 + **DropWizard 0.7** for **Java 8** - `MAINTENANCE` - New features will be applied primarily to this branch.
