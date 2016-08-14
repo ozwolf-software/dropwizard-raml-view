@@ -7,6 +7,16 @@
     <groupId>net.ozwolf</groupId>
     <artifactId>dropwizard-raml-view</artifactId>
     <version>0.9.2.1</version>
+    <name>DropWizard RAML View</name>
+    <description>A bundle for adding an human-readable view of a service's RAML specification</description>
+    <url>https://github.com/ozwolf-software/dropwizard-raml-view</url>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <compile.level>1.8</compile.level>
@@ -29,6 +39,17 @@
         <javadoc.exclude.packages>net.ozwolf.raml.model:net.ozwolf.raml.resources:net.ozwolf.raml.utils:net.ozwolf.raml.views</javadoc.exclude.packages>
     </properties>
 
+    <developers>
+        <developer>
+            <name>Wade Pearce</name>
+            <email>ozwolf@gmail.com</email>
+            <timezone>Australia/Hobart</timezone>
+            <roles>
+                <role>architect</role>
+            </roles>
+        </developer>
+    </developers>
+
     <distributionManagement>
         <repository>
             <id>sonatype</id>
@@ -41,6 +62,13 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git://github.com/ozwolf-software/dropwizard-raml-view.git</connection>
+        <developerConnection>scm:git:git@github.com:ozwolf-software/dropwizard-raml-view.git</developerConnection>
+        <url>https://github.com/ozwolf-software/dropwizard-raml-view</url>
+        <tag>v0.9.2.1</tag>
+    </scm>
 
     <dependencies>
         <!-- Runtime Libraries -->
@@ -158,6 +186,19 @@
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
