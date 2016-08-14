@@ -1,7 +1,15 @@
 language: java
-script: mvn clean verify
+
 jdk:
-    - oraclejdk8
+  - oraclejdk8
+
+env:
+  global:
+    - SONATYPE_USERNAME=OzWolf
+    - secure: "UAO80wmX5J05DqaK3Tb1E05c1opmSLg8w+auzY7em6ZcwKXeSMiQ91rSWoXOOHx2m5/Bh82lZkgASNOgyKPI39jNDm5wo0EnsCxRGgs7tYyXhgNGsN1AiAr+IjY4yojFvfx1V3milIx4NZTQDhL9VHHVDXoLc0+qEXBQc2RmQTw="
+
+script: mvn clean deploy --settings travis-settings.xml
+
 notifications:
-    email:
-        - ozwolf@gmail.com
+  email:
+    - ozwolf@gmail.com
