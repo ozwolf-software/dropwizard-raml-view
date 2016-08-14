@@ -1,15 +1,13 @@
 language: java
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 env:
   global:
-    - SONATYPE_USERNAME=OzWolf
-    - secure: "UAO80wmX5J05DqaK3Tb1E05c1opmSLg8w+auzY7em6ZcwKXeSMiQ91rSWoXOOHx2m5/Bh82lZkgASNOgyKPI39jNDm5wo0EnsCxRGgs7tYyXhgNGsN1AiAr+IjY4yojFvfx1V3milIx4NZTQDhL9VHHVDXoLc0+qEXBQc2RmQTw="
+  - SONATYPE_USERNAME=OzWolf
+  - secure: VFWko4Bwwegmcb3krloK169xRqvXs3O9VAAk+SqZqGn7lDIUDNujrhguYbKF3+MYhywDcKZ4mNB9i4eKzjoeiUiwf1mfinUT+0Tr57KqojXHM2yH4HrxK8bqzgu24oPYPWnTqVZnBpZoIyZAbbcaRcCtm0Ir4TsgHc2/rJGuipU=
+  - secure: OJofjkAn73LJephLssj5/f6t0xCxg2Hy7Hid0KL/kabM7II666B6Gp8uIfIHNB6WaSWmunCfboCU1W1eEEQVzx3ypRXiYOpf78MZ+sk3EGnwqToD6kKjUNoqXHNXFeXE/J7MXSfgQa90d6xXf8hBTNkoMpOWc1eHA3k6UKWDjZA=
 
-script: mvn clean source:jar deploy --settings travis-settings.xml
-
+script: mvn clean source:jar deploy --settings travis-settings.xml -Dgpg.passphrase=${GPG_PASSPHRASE}
 notifications:
   email:
-    - ozwolf@gmail.com
+  - ozwolf@gmail.com
