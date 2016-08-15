@@ -6,7 +6,7 @@ notifications:
   - ozwolf@gmail.com
 env:
   global:
-  - GPGDIR="`pwd`/gpg"
+  - GPG_DIR="`pwd`/gpg"
   - secure: AMTKaoNInoDmk6IyD9gnD6k3bbYhYgYXN7ah68tjKLCcPBC0lwRrLIsNXFrykcyBRQ0xpD70VbkdAw9LMRE945C0Qq1BI01sI01K7c9gXx++nuRjHPP6nVB4/gt/6qicZmzBmDHdrPkGetdjRcP6/9wUIBk4R1jwGJQQQQ/bWd4=
   - secure: gH3G8FZUXeeYcsJRlxAhnlTNbJBkUkjXyn4FynFB+xPBTuF0EMrghTZ5JS09/6KgjD5q0PwEPaLgf9ZQVQivKsVIIULfKFqPt6dzu4lxSPHakXZL+rCI1CegKq0zjIS3Dr0zodZgLNgHJPmX80vfJqBNYdbqvC9EhZBL6s7piQQ=
   - secure: cyTbvtjX05grQA4GNtrFfICOyXW3ugdki4lc8hrQ2yVrVs4D/fr7vQUdA4qCLyXIipYESUZuE/Ia6P/HG62E3gKOobejhXnB1DMYUaTso7CFfi42mgZLuBZm2mb4cHqu1ZErhdUqps7wbzmNbb3wpQAIUYoTACc2v/GMmg0fyzg=
