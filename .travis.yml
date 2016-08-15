@@ -7,13 +7,13 @@ notifications:
 env:
   global:
   - GPG_DIR="`pwd`/gpg"
-  - secure: AMTKaoNInoDmk6IyD9gnD6k3bbYhYgYXN7ah68tjKLCcPBC0lwRrLIsNXFrykcyBRQ0xpD70VbkdAw9LMRE945C0Qq1BI01sI01K7c9gXx++nuRjHPP6nVB4/gt/6qicZmzBmDHdrPkGetdjRcP6/9wUIBk4R1jwGJQQQQ/bWd4=
-  - secure: gH3G8FZUXeeYcsJRlxAhnlTNbJBkUkjXyn4FynFB+xPBTuF0EMrghTZ5JS09/6KgjD5q0PwEPaLgf9ZQVQivKsVIIULfKFqPt6dzu4lxSPHakXZL+rCI1CegKq0zjIS3Dr0zodZgLNgHJPmX80vfJqBNYdbqvC9EhZBL6s7piQQ=
-  - secure: cyTbvtjX05grQA4GNtrFfICOyXW3ugdki4lc8hrQ2yVrVs4D/fr7vQUdA4qCLyXIipYESUZuE/Ia6P/HG62E3gKOobejhXnB1DMYUaTso7CFfi42mgZLuBZm2mb4cHqu1ZErhdUqps7wbzmNbb3wpQAIUYoTACc2v/GMmg0fyzg=
-  - secure: MyldhZUtEVP6OvSTIRRV3xB4ZUSpJDsaAcq5hPZeU9s8iz05+SeVwonvJTVNA+SGdTq3Ad1r00LfnPrBrZIiD1dGJ+qfcxH20bONB3Rb0mi6Ts960nlqAdSMC7tpKtX/5JR0zXrA/c+wzEmgaTvdIsndxLG/223FYFoQ9E7XfGY=
-  - secure: I4lq4t+FecQ7xUwfyHDgPtDtP2LUmb2a/03H1bDgvvBcEwJHuCxuFTFYvtgv2tpPm/4eHvGoD9EGCkDksmYuMIbEVpoXw71ZmteXRwtj2EaHdpdvhFTZLZ4fIn94bTJxRz6csXRiZhjVClUWU/u5w+i9V/D7PiolZYZaNmXDQPw=
+  - secure: LStPfM5jsirxrcgrtjLAc2amwIoXNBw7FELcMdrU24yHMv4ymfC4geMxpOP42YOq3iSu82flvxKdOycWZK7KQ+a9aCndjLlBKyJO2Uvq8o0ner+C/mjJi6tHaesyR/WvNRzmzkCz7kECyq8Yj2MZokCO1DZyjwoQWbO+lx+KY0k=
+  - secure: Fm4tAKceD+mHFc/Cj7xRyKvA2ZxsOP/mMm3DUBW673J+Bh9Sdwl0lzGkK3WnJX+Mi3vdjSqKTHfWXH1Y0ze4yQ8PAIsLxtpP/4F+eKANhTNqrgKbiJWeU+B5oDMykqilw7QfiiUwkReI/+scXZd7gL8BimLsP5DQg/nLYuj4cO0=
+  - secure: ZIpM8XNTg/ZOEqfrSWRTqAzL0ntWMF8BvPa320WxE4HJgi5XkIXkL44uRkEI4hb31yMsIT6XLiczgHDOgNFVu6ZhT4bnUk7emdfHXs00FD3Quh5L3kS3W+V7Ahl5Q3e+RF+MUXFIX/sLzek08FeZTl6f77O5RNuRCUzv9GKiujk=
+  - secure: CnYfqVXx23U4jV68USpURjdhFuMW+ad1PuNaAJIOrUQidM67zziQHhsv+BSEBiBEpGRvGZ5r+tsaIbtuLD/ra0V10m/8v0MzjxM9TqoTc40HCBF6jb2E25fhsBX8hFdvTEw+oCHQyAUsrn9IgQsQheuNc52PNKJ3VtFa+ZrZDj8=
+  - secure: UwNsKXQJBvzqdmdZmL2cnIxQ5Fb7wnK2Bczl2Y5y4Snksw/Bjv7ZIKxYLRUPpYHocjpBQvwa6C+ch9ow8ii8C8fFhPbzbhR0RGry1+HAnAIf3UHvNR38dySlBSvp9pI6aLNI1IoSIpenfNfgxhcdLQw17ByzT4qOI4IHZeweHo8=
 
 after_success:
-  - openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in $GPG_DIR/pubring.gpg.enc -out $GPG_DIR/pubring.gpg -d
-  - openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in $GPG_DIR/secring.gpg.enc -out $GPG_DIR/secring.gpg -d
-  - mvn -P ossrh clean source:jar deploy --settings travis-settings.xml
+- openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in $GPG_DIR/pubring.gpg.enc -out $GPG_DIR/pubring.gpg -d
+- openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in $GPG_DIR/secring.gpg.enc -out $GPG_DIR/secring.gpg -d
+- mvn -P ossrh clean source:jar deploy --settings travis-settings.xml
