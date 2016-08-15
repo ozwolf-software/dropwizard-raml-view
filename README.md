@@ -10,9 +10,11 @@ The RAML specification documentation can be found [`here`](https://github.com/ra
 
 **Note:** This library currently only supports RAML 0.8.
 
-## Compatability
+## Compatibility
 
-This project has 4 compatability branches:
+This project has 5 compatibility branches:
+
++ **DropWizard 1.0.0** for **Java 8** - `PREVIEW` - Experimental branch for new DropWizard 1.0.0 release.
 
 + (**MASTER**) **DropWizard 0.9** for **Java 7** - `LIVE` -  New features will be applied primarily to this branch.
     + *Version Numbers*
