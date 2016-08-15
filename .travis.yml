@@ -19,4 +19,4 @@ before_script:
   - openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in $GPG_DIR/secring.gpg.enc -out $GPG_DIR/secring.gpg -d
 
 script:
-  - mvn -P ossrh clean source:jar deploy
+  - mvn -P ossrh clean source:jar deploy --settings travis-settings.xml
