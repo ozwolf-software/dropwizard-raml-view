@@ -1,0 +1,31 @@
+server:
+  maxThreads: 50
+  applicationConnectors:
+    - type: http
+      port: 3500
+  adminConnectors:
+    - type: http
+      port: 3501
+  requestLog:
+    appenders:
+      - type: console
+        threshold: OFF
+        timeZone: Australia/Melbourne
+      - type: file
+        threshold: INFO
+        currentLogFilename: target/logs/sanity-test-requests.log
+        archivedLogFilenamePattern: target/logs/archived/sanity-test-requests-%d.log.gz
+        archivedFileCount: 10
+        timeZone: Australia/Melbourne
+
+logging:
+  appenders:
+    - type: console
+      threshold: OFF
+      timeZone: Australia/Melbourne
+    - type: file
+      threshold: INFO
+      currentLogFilename: target/logs/sanity-test-app.log
+      archivedLogFilenamePattern: target/logs/archived/sanity-test-app-%d.log.gz
+      archivedFileCount: 10
+      timeZone: Australia/Melbourne

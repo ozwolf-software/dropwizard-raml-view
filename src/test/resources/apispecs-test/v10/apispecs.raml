@@ -1,11 +1,11 @@
-#%RAML 0.8
+#%RAML 1.0
 title: Test API
 version: 1.0-SNAPSHOT
 protocols: [ HTTP ]
 baseUri: http://localhost/
 
 traits:
-  - deprecated:
+  deprecated:
     usage: apply this to any action that is deprecated
     description: some requests are deprecated and are expected to be retired
 
@@ -14,24 +14,23 @@ documentation:
     content: !include documentation/summary.md
 
 securitySchemes:
-  - basic:
+  basic:
       description: basic HTTP authentication
-      type: basic
+      type: Basic Authentication
       describedBy:
         headers:
           Authorization:
             description: Basic authentication token
             type: string
             pattern: Basic (.*)
-            example: |
-              Basic d3hwMDAxQGFzaXM6dGVzdGluZw==
+            example: Basic d3hwMDAxQGFzaXM6dGVzdGluZw==
         responses:
           401:
             description: |
               Invalid username or password provided
-  - custom-sec:
+  custom-sec:
       description: custom security model
-      type: custom
+      type: x-custom
       describedBy:
         queryParameters:
           custom-sec:
@@ -99,7 +98,6 @@ securitySchemes:
         type: number
         required: true
         example: 1
-        pattern: ([0-9].+)
     get:
       description: retrieve a single book
       responses:
@@ -107,6 +105,7 @@ securitySchemes:
           description: book successfully found
           headers:
             x-call-id:
+              displayName: Call ID
               description: the call id used to track a users journey through the services
               type: string
               required: true

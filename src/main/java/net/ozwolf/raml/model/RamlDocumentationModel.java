@@ -1,32 +1,9 @@
 package net.ozwolf.raml.model;
 
-import org.apache.commons.codec.binary.Hex;
-import org.raml.model.DocumentationItem;
+public interface RamlDocumentationModel {
+    String getId();
 
-import static net.ozwolf.raml.utils.MarkDownHelper.fromMarkDown;
+    String getTitle();
 
-public class RamlDocumentationModel {
-    private final DocumentationItem item;
-
-    public RamlDocumentationModel(DocumentationItem item) {
-        this.item = item;
-    }
-
-    public String getId() {
-        return Hex.encodeHexString(getTitle().getBytes());
-    }
-
-    public String getTitle() {
-        return item.getTitle();
-    }
-
-    public String getContent() {
-        if (item.getContent() == null) return null;
-        return fromMarkDown(item.getContent());
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Documentation = [%s]", getTitle());
-    }
+    String getContent();
 }

@@ -1,71 +1,39 @@
 package net.ozwolf.raml.model;
 
 import net.ozwolf.raml.configuration.ApiSpecsConfiguration;
-import org.raml.model.Protocol;
-import org.raml.model.Raml;
-import org.raml.parser.visitor.RamlDocumentBuilder;
+import net.ozwolf.raml.exception.RamlValidationException;
+import net.ozwolf.raml.model.v08.V08_RamlModel;
+import net.ozwolf.raml.model.v10.V10_RamlModel;
+import org.raml.v2.api.RamlModelBuilder;
+import org.raml.v2.api.RamlModelResult;
 
 import java.net.URI;
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static java.util.stream.Collectors.toList;
+@SuppressWarnings("Convert2MethodRef")
+public interface RamlModel {
+    String getTitle();
 
-public class RamlModel {
-    private final Raml raml;
-    private final ApiSpecsConfiguration configuration;
+    String getVersion();
 
-    public RamlModel(String specificationFile, ApiSpecsConfiguration configuration) {
-        this.raml = new RamlDocumentBuilder().build(specificationFile);
-        this.configuration = configuration;
-    }
+    List<String> getProtocols();
 
-    public String getTitle() {
-        return raml.getTitle();
-    }
+    boolean hasStylesheets();
 
-    public String getVersion() {
-        return raml.getVersion();
-    }
+    List<URI> getStylesheets();
 
-    public List<Protocol> getProtocols() {
-        if (raml.getProtocols() == null || raml.getProtocols().isEmpty()) return newArrayList(Protocol.HTTP);
-        return raml.getProtocols();
-    }
+    List<RamlDocumentationModel> getDocumentation();
 
-    public boolean hasStylesheets() {
-        return !configuration.getStylesheets().isEmpty();
-    }
+    List<RamlSecurityModel> getSecurity();
 
-    public List<URI> getStylesheets() {
-        return configuration.getStylesheets();
-    }
+    List<RamlResourceModel> getResources();
 
-    public List<RamlDocumentationModel> getDocumentation() {
-        if (raml.getDocumentation() == null) return newArrayList();
-        return raml.getDocumentation().stream()
-                .map(RamlDocumentationModel::new)
-                .collect(toList());
-    }
+    static RamlModel create(String specificationFile, ApiSpecsConfiguration configuration) throws RamlValidationException {
+        RamlModelResult result = new RamlModelBuilder().buildApi(specificationFile);
 
-    public List<RamlResourceModel> getResources() {
-        if (raml.getResources() == null) return newArrayList();
-        return raml.getResources().values().stream()
-                .map(v -> new RamlResourceModel(v, getSecurity()))
-                .collect(toList());
-    }
+        if (result.hasErrors())
+            throw new RamlValidationException("RAML specification is invalid.", result.getValidationResults());
 
-    private List<RamlSecurityModel> getSecurity() {
-        return raml.getSecuritySchemes().stream()
-                .map(s -> new RamlSecurityModel(
-                        s.entrySet().stream().findFirst().get().getKey(),
-                        s.entrySet().stream().findFirst().get().getValue()
-                ))
-                .collect(toList());
-    }
-
-    @Override
-    public String toString() {
-        return String.format("RAML = [%s - v%s]", raml.getTitle(), raml.getVersion());
+        return result.isVersion08() ? new V08_RamlModel(result.getApiV08(), configuration) : new V10_RamlModel(result.getApiV10(), configuration);
     }
 }

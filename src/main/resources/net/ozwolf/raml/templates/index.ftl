@@ -34,8 +34,6 @@
             [#list model.protocols as protocol]
             <code>${protocol}</code>
             [/#list]
-            &nbsp;
-            <a href="/api/raw">Raw Specification</a>
         </span>
     </div>
     <h1 id="title">

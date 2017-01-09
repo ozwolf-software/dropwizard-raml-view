@@ -1,11 +1,11 @@
 package net.ozwolf.raml;
 
-import net.ozwolf.raml.configuration.ApiSpecsConfiguration;
-import net.ozwolf.raml.resources.ApiResource;
 import io.dropwizard.Bundle;
-import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import net.ozwolf.raml.configuration.ApiSpecsConfiguration;
+import net.ozwolf.raml.resources.ApiResource;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.views.ViewBundle;
 
 import static net.ozwolf.raml.configuration.ApiSpecsConfiguration.configuration;

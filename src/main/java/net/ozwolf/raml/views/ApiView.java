@@ -1,7 +1,7 @@
 package net.ozwolf.raml.views;
 
-import net.ozwolf.raml.model.RamlModel;
 import io.dropwizard.views.View;
+import net.ozwolf.raml.model.RamlModel;
 
 public class ApiView extends View {
     private final RamlModel model;
@@ -13,9 +13,5 @@ public class ApiView extends View {
 
     public RamlModel getModel() {
         return model;
-    }
-
-    public static ApiView view(RamlModel model) {
-        return new ApiView(model);
     }
 }
