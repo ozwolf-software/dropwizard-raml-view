@@ -55,7 +55,8 @@ This project currently provides functionality that meet my usage needs for RAML 
 
 ## RAML Specification
 
-The RAML specification documentation can be found [`here`](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md)
+The RAML 1.0 specification documentation can be found [`here`](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md)
+The RAML 0.8 specification documentation can be found [`here`](https://github.com/raml-org/raml-spec/blob/master/versions/raml-08/raml-08.md)
 
 ## Contributions
 
