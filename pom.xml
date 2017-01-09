@@ -6,7 +6,7 @@
 
     <groupId>net.ozwolf</groupId>
     <artifactId>dropwizard-raml-view</artifactId>
-    <version>2.0.1.0</version>
+    <version>1.0.2.0</version>
     <name>DropWizard RAML View</name>
     <description>A bundle for adding an human-readable view of a service's RAML specification</description>
     <url>https://github.com/ozwolf-software/dropwizard-raml-view</url>
@@ -70,7 +70,7 @@
         <connection>scm:git:git://github.com/ozwolf-software/dropwizard-raml-view.git</connection>
         <developerConnection>scm:git:git@github.com:ozwolf-software/dropwizard-raml-view.git</developerConnection>
         <url>https://github.com/ozwolf-software/dropwizard-raml-view</url>
-        <tag>v1.0.5.1</tag>
+        <tag>v1.0.2.0</tag>
     </scm>
 
     <dependencies>
