@@ -1,6 +1,8 @@
 # DropWizard RAML API Resource Bundle
 
-[![Build Status](https://travis-ci.org/ozwolf-software/dropwizard-raml-view.svg?branch=master)](https://travis-ci.org/ozwolf-software/dropwizard-raml-view)
+[![Travis](https://img.shields.io/travis/ozwolf-software/dropwizard-raml-view.svg?style=flat-square)](https://travis-ci.org/ozwolf-software/dropwizard-raml-view)
+[![Maven Central](https://img.shields.io/maven-central/v/net.ozwolf/dropwizard-raml-view.svg?style=flat-square)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22net.ozwolf%22%20AND%20a%3A%22dropwizard-raml-view%22)
+[![Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](LICENSE)
 
 This bundle allows a RAML specification to be attached to the resources of the service, exposing a human-readable, HTML representation of the RAML specification on the `/api` resource.
 
@@ -18,7 +20,7 @@ As this bundle now uses the newer `raml-parser-2` library, Mulesoft have impleme
 <dependency>
     <groupId>net.ozwolf</groupId>
     <artifactId>dropwizard-raml-view</artifactId>
-    <version>1.0.2.0</version>
+    <version>${current.version}</version>
 </dependency>
 ```
 
