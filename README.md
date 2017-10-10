@@ -28,6 +28,7 @@ As this bundle now uses the newer `raml-parser-2` library, Mulesoft have impleme
 
 The following versions are available via [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22dropwizard-raml-view%22):
 
++ DropWizard 1.2.+ (with RAML 0.8 and 1.0 support) - [Version 1.2.1.0](http://search.maven.org/#artifactdetails%7Cnet.ozwolf%7Cdropwizard-raml-view%7C1.2.1.0%7Cjar)
 + DropWizard 1.1.+ (with RAML 0.8 and 1.0 support) - [Version 1.1.1.0](http://search.maven.org/#artifactdetails%7Cnet.ozwolf%7Cdropwizard-raml-view%7C1.1.1.0%7Cjar)
 + DropWizard 1.0.+ (with RAML 0.8 and 1.0 support) - [Version 1.0.2.0](http://search.maven.org/#artifactdetails%7Cnet.ozwolf%7Cdropwizard-raml-view%7C1.0.2.0%7Cjar)
 + DropWizard 0.9.2 (with RAML 0.8 support) - [Version 0.9.2.1](http://search.maven.org/#artifactdetails%7Cnet.ozwolf%7Cdropwizard-raml-view%7C0.9.2.1%7Cjar)
