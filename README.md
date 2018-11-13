@@ -6,6 +6,10 @@
 
 This bundle allows a RAML specification to be attached to the resources of the service, exposing a human-readable, HTML representation of the RAML specification on the `/api` resource.
 
+## EOL Notice
+
+This library has reached it's conclusion and it's concepts have been migrated into the new [DropWizard RAML](https://github.com/ozwolf-software/dropwizard-raml) project.  Specifically, to migrate from this view to the new view, refer to the [DropWizard RAML API Docs](https://github.com/ozwolf-software/dropwizard-raml/tree/master/dropwizard-raml-apidocs) library.
+
 ## Disclaimer
 
 This bundle supports both RAML 1.0 and RAML 0.8 but not all features of the specification language have been implemented in the view.
