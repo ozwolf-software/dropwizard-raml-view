@@ -1,5 +1,6 @@
 # DropWizard RAML API Resource Bundle
 
+[![Status](https://img.shields.io/badge/status-EOL-red.svg?style=flat-square)](https://img.shields.io/badge/status-EOL-red.svg)
 [![Travis](https://img.shields.io/travis/ozwolf-software/dropwizard-raml-view.svg?style=flat-square)](https://travis-ci.org/ozwolf-software/dropwizard-raml-view)
 [![Maven Central](https://img.shields.io/maven-central/v/net.ozwolf/dropwizard-raml-view.svg?style=flat-square)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22net.ozwolf%22%20AND%20a%3A%22dropwizard-raml-view%22)
 [![Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](LICENSE)
